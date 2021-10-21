@@ -27,11 +27,11 @@ namespace DatabaseFirstLINQ
             //ProblemNine();
             //ProblemTen();
             //ProblemEleven();
-            ProblemTwelve();
+            //ProblemTwelve();
             //ProblemThirteen();
             //ProblemFourteen();
             //ProblemFifteen();
-            //ProblemSixteen();
+            ProblemSixteen();
             //ProblemSeventeen();
             //ProblemEighteen();
             //ProblemNineteen();
@@ -241,6 +241,22 @@ namespace DatabaseFirstLINQ
         private void ProblemFourteen()
         {
             // Add the product you create to the user we created in the ShoppingCart junction table using LINQ.
+            
+            var userId = _context.Users.Where(u => u.Email == "david@gmail.com").Select(u => u.Id).SingleOrDefault();
+            var productId = _context.Products.Where(p => p.Name == "Fitbit Charge 5").Select(p => p.Id).SingleOrDefault();
+
+            ShoppingCart newShoppingCart = new ShoppingCart()
+            {
+                UserId = userId,
+                ProductId = productId,
+                Quantity = 1
+            };
+            _context.ShoppingCarts.Add(newShoppingCart);
+            _context.SaveChanges();
+
+
+
+
 
         }
 
@@ -258,6 +274,12 @@ namespace DatabaseFirstLINQ
         private void ProblemSixteen()
         {
             // Update the price of the product you created to something different using LINQ.
+            var product = _context.Products.Where(u => u.Name == "Fitbit Charge 5").SingleOrDefault();
+            
+            product.Price = 190;
+
+            _context.Products.Update(product);
+            _context.SaveChanges();
 
         }
 
