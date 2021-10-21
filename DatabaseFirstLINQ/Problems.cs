@@ -31,11 +31,13 @@ namespace DatabaseFirstLINQ
             //ProblemThirteen();
             //ProblemFourteen();
             //ProblemFifteen();
-            ProblemSixteen();
+            //ProblemSixteen();
             //ProblemSeventeen();
             //ProblemEighteen();
             //ProblemNineteen();
             //ProblemTwenty();
+            //BonusOne();
+            //BonusTwo();
         }
 
         // <><><><><><><><> R Actions (Read) <><><><><><><><><>
@@ -304,6 +306,11 @@ namespace DatabaseFirstLINQ
         private void ProblemEighteen()
         {
             // Delete the role relationship from the user who has the email "oda@gmail.com" using LINQ.
+            var userRole = _context.UserRoles.Where(ur => ur.User.Email == "oda@gmail.com").SingleOrDefault();
+            _context.UserRoles.Remove(userRole);
+
+            _context.SaveChanges();
+            
 
         }
 
@@ -322,6 +329,12 @@ namespace DatabaseFirstLINQ
         private void ProblemTwenty()
         {
             // Delete the user with the email "oda@gmail.com" from the Users table using LINQ.
+            var users = _context.Users.Where(u => u.Email == "oda@gmail.com");
+            foreach (User person in users)
+            {
+                _context.Users.Remove(person);
+            }
+            _context.SaveChanges();
 
         }
 
@@ -332,6 +345,22 @@ namespace DatabaseFirstLINQ
             // Prompt the user to enter in an email and password through the console.
             // Take the email and password and check if the there is a person that matches that combination.
             // Print "Signed In!" to the console if they exists and the values match otherwise print "Invalid Email or Password.".
+            Console.WriteLine("Enter Email: ");
+            string email = Console.ReadLine();
+
+            Console.WriteLine("Enter password: ");
+            string password = Console.ReadLine();
+
+            var user = _context.Users.Where(u => u.Email == email && u.Password == password).SingleOrDefault();
+            if (user == null)
+            {
+                Console.WriteLine("Invalid Email or Password, please try again.");
+            }
+
+            else
+            {
+                Console.WriteLine("Signed In!");
+            }
         }
 
         private void BonusTwo()
